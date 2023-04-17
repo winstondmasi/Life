@@ -1,6 +1,6 @@
 #function that represents the entire game world 
 
-class world:
+class World:
     def rule1(self):
         print("A live cell with fewer than two live neighbors dies")
 
