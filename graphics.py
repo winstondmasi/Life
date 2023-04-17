@@ -1,0 +1,1 @@
+#functions related to the visualization and grapjical represntation of the game of life
