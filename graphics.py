@@ -1,6 +1,7 @@
 #functions related to the visualization and grapjical represntation of the game of life
 
 import tkinter as tk
+from tkinter import simpledialog
 from world import World
 from typing import Union
 
@@ -62,13 +63,13 @@ class Graphics(tk.Tk):
         self.world.randomize_grid()
         self.draw_world()
 
-
     def update_world(self) -> None:
-        # Update the world using the World class methods and redraw the world
-        self.world.update_world()
-        self.draw_world()
-        self.after(100, self.update_world)  # Update the world every 100ms, adjust the delay as needed
-        self.after(self.speed_scale.get(), self.update_world)
+    # Update the world using the World class methods and redraw the world
+        if self.is_running:
+            self.world.update_world()
+            self.draw_world()
+            self.after(self.speed_scale.get(), self.update_world)  # Update the world based on the speed_scale value
+
 
     def draw_world(self) -> None:
         # Draw the current state of the world on the canvas using rectangles for alive cells
@@ -88,10 +89,14 @@ class Graphics(tk.Tk):
         self.draw_world()
 
     def save_pattern(self):
-        pattern_name = input("Enter a name for the pattern: ")
-        self.world.save_pattern(pattern_name)
+        pattern_name = simpledialog.askstring("Save pattern", "Enter a name for the pattern:")
+        if pattern_name:  # Check if the user entered a name (not an empty string or None)
+            self.world.save_pattern(pattern_name)
+
 
     def load_pattern(self):
-        pattern_name = input("Enter the name of the pattern to load: ")
-        self.world.load_pattern(pattern_name)
+        pattern_name = simpledialog.askstring("Load pattern", "Enter the name of the pattern to load:")
+        if pattern_name:  # Check if the user entered a name (not an empty string or None)
+            self.world.load_pattern(pattern_name)
+
 
