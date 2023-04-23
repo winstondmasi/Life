@@ -4,6 +4,8 @@ import tkinter as tk
 from world import World
 from cell import Cell
 from typing import Union
+import json
+import os
 
 class Graphics(tk.Tk):
     def __init__(self, row: int, col: int, cell_size: int):
@@ -34,6 +36,18 @@ class Graphics(tk.Tk):
         self.canvas.bind("<Button-1>", self.toggle_cell_state)
 
         self.is_running = False
+
+        self.load_button = tk.Button(self, text="Load", command=self.load_pattern)
+        self.load_button.pack(side="left")
+
+        self.save_button = tk.Button(self, text="Save", command=self.save_pattern)
+        self.save_button.pack(side="left")
+
+        # Add scale widget for adjusting simulation speed
+
+        self.speed_scale = tk.Scale(self, from_=10, to=1000, orient="horizontal", label="Speed")
+        self.speed_scale.set(100)
+        self.speed_scale.pack(side="left")
     
     def start_simulation(self) -> None:
         # Start the simulation by setting the is_running flag and updating the world
@@ -51,11 +65,29 @@ class Graphics(tk.Tk):
         self.world.randomize_grid()
         self.draw_world()
 
+    def load_pattern(self):
+        file_path = "patterns/pattern.json"  # Update this with the path to your pattern file
+
+        if os.path.exists(file_path):
+            with open(file_path, "r") as file:
+                pattern = json.load(file)
+                self.world.grid = [[Cell(cell_data["alive"], i, j) for j, cell_data in enumerate(row_data)] for i, row_data in enumerate(pattern)]
+                self.draw_world()
+    
+    def save_pattern(self):
+        file_path = "patterns/pattern.json"  # Update this with the path to your pattern file
+
+        pattern = [[{"alive": cell.alive} for cell in row] for row in self.world.grid]
+        with open(file_path, "w") as file:
+            json.dump(pattern, file)
+
+
     def update_world(self) -> None:
         # Update the world using the World class methods and redraw the world
         self.world.update_world()
         self.draw_world()
         self.after(100, self.update_world)  # Update the world every 100ms, adjust the delay as needed
+        self.after(self.speed_scale.get(), self.update_world)
 
     def draw_world(self) -> None:
         # Draw the current state of the world on the canvas using rectangles for alive cells

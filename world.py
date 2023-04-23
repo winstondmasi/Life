@@ -4,7 +4,7 @@ from typing import List
 from cell import Cell
 
 class World:
-    """Represents the Game of Life world."""
+    #Represents the Game of Life world
 
     def __init__(self, row: int, col: int):
         #Initializes the World with rows and columns
