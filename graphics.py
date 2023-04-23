@@ -81,7 +81,7 @@ class Graphics(tk.Tk):
                     x2, y2 = x1 + self.cell_size, y1 + self.cell_size
                     self.canvas.create_rectangle(x1, y1, x2, y2, fill="black", outline="")
 
-    def toggle_cell_state(self, event: Union[tk.Event, tk.MouseEvent]) -> None:
+    def toggle_cell_state(self, event) -> None:
         # Toggle the state of the cell that was clicked by the user
         i = event.y // self.cell_size
         j = event.x // self.cell_size
