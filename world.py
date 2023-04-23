@@ -1,5 +1,6 @@
 #function that represents the entire game world
 import random
+import json
 from typing import List
 from cell import Cell
 
@@ -46,3 +47,17 @@ class World:
             return alive_neighbours == 2 or alive_neighbours == 3
         else:
             return alive_neighbours == 3
+        
+    def save_pattern(self, pattern_name: str) -> None:
+        pattern = [[cell.alive for cell in row] for row in self.grid]
+
+        with open(f'patterns/{pattern_name}.json', 'w') as file:
+            json.dump(pattern, file)
+
+    def load_pattern(self, pattern_name: str) -> None:
+        with open(f'patterns/{pattern_name}.json', 'r') as file:
+            pattern = json.load(file)
+
+        for i, row in enumerate(pattern):
+            for j, alive in enumerate(row):
+                self.grid[i][j].alive = alive

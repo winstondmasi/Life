@@ -2,10 +2,7 @@
 
 import tkinter as tk
 from world import World
-from cell import Cell
 from typing import Union
-import json
-import os
 
 class Graphics(tk.Tk):
     def __init__(self, row: int, col: int, cell_size: int):
@@ -65,22 +62,6 @@ class Graphics(tk.Tk):
         self.world.randomize_grid()
         self.draw_world()
 
-    def load_pattern(self):
-        file_path = "patterns/pattern.json"  # Update this with the path to your pattern file
-
-        if os.path.exists(file_path):
-            with open(file_path, "r") as file:
-                pattern = json.load(file)
-                self.world.grid = [[Cell(cell_data["alive"], i, j) for j, cell_data in enumerate(row_data)] for i, row_data in enumerate(pattern)]
-                self.draw_world()
-    
-    def save_pattern(self):
-        file_path = "patterns/pattern.json"  # Update this with the path to your pattern file
-
-        pattern = [[{"alive": cell.alive} for cell in row] for row in self.world.grid]
-        with open(file_path, "w") as file:
-            json.dump(pattern, file)
-
 
     def update_world(self) -> None:
         # Update the world using the World class methods and redraw the world
@@ -105,4 +86,12 @@ class Graphics(tk.Tk):
         j = event.x // self.cell_size
         self.world.grid[i][j].alive = not self.world.grid[i][j].alive
         self.draw_world()
+
+    def save_pattern(self):
+        pattern_name = input("Enter a name for the pattern: ")
+        self.world.save_pattern(pattern_name)
+
+    def load_pattern(self):
+        pattern_name = input("Enter the name of the pattern to load: ")
+        self.world.load_pattern(pattern_name)
 
