@@ -22,28 +22,32 @@ class Graphics(tk.Tk):
         self.canvas = tk.Canvas(self, width=col*cell_size, height=row*cell_size, bg='white')
         self.canvas.pack()
 
-        self.start_button = tk.Button(self, text="Start", command=self.start_simulation)
+        # Create a frame to contain the buttons
+        self.button_frame = tk.Frame(self)
+        self.button_frame.pack()
+
+        self.start_button = tk.Button(self.button_frame, text="Start", command=self.start_simulation)
         self.start_button.pack(side="left")
 
-        self.stop_button = tk.Button(self, text="Stop", command=self.stop_simulation)
+        self.stop_button = tk.Button(self.button_frame, text="Stop", command=self.stop_simulation)
         self.stop_button.pack(side="left")
 
-        self.reset_button = tk.Button(self, text="Reset", command=self.reset_simulation)
+        self.reset_button = tk.Button(self.button_frame, text="Reset", command=self.reset_simulation)
         self.reset_button.pack(side="left")
 
         self.canvas.bind("<Button-1>", self.toggle_cell_state)
 
         self.is_running = False
 
-        self.load_button = tk.Button(self, text="Load", command=self.load_pattern)
+        self.load_button = tk.Button(self.button_frame, text="Load", command=self.load_pattern)
         self.load_button.pack(side="left")
 
-        self.save_button = tk.Button(self, text="Save", command=self.save_pattern)
+        self.save_button = tk.Button(self.button_frame, text="Save", command=self.save_pattern)
         self.save_button.pack(side="left")
 
         # Add scale widget for adjusting simulation speed
 
-        self.speed_scale = tk.Scale(self, from_=10, to=1000, orient="horizontal", label="Speed")
+        self.speed_scale = tk.Scale(self.button_frame, from_=10, to=1000, orient="horizontal", label="Speed")
         self.speed_scale.set(100)
         self.speed_scale.pack(side="left")
     

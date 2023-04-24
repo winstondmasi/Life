@@ -13,6 +13,14 @@ The game consists of a grid of cells, which can be in one of two states: alive o
 3. Any live cell with more than three live neighbors dies, as if by overpopulation.
 4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
 
+## Features
+
+- Start, stop, and reset the simulation with dedicated buttons
+- Manually toggle the state of individual cells by clicking on them
+- Save and load custom patterns for reuse
+- Adjust the simulation speed with a slider
+- User-friendly graphical interface using Tkinter
+
 ## Usage
 
 To run the game, execute the following command:
