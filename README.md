@@ -13,7 +13,7 @@ The game consists of a grid of cells, which can be in one of two states: alive o
 3. Any live cell with more than three live neighbors dies, as if by overpopulation.
 4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
 
-![GAME OF LIFE APPLICATION Screenshot](image/screen1.png)
+![GAME OF LIFE APPLICATION Screenshot](images/screen1.png)
 
 ## Features
 
